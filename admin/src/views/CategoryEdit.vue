@@ -21,7 +21,7 @@
     },
     methods: {
       save () {
-        alert(1111)
+        this.$http.post('rest/categories', this.model)
       }
     },
   }
