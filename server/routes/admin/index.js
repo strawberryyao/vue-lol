@@ -1,9 +1,7 @@
 module.exports = app => {
   const express = require('express')
   
-  const router = express.Router({
-    mergeParams: true
-  })
+  const router = express.Router()
   const Category = require('../../models/Category')
   console.log(11111111111)
   router.post('/categories', async (req,res) => {
