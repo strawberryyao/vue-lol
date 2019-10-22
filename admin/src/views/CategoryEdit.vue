@@ -16,12 +16,15 @@
   export default {
     data() {
       return {
-        model: '',
+        model: {},
       }
     },
     methods: {
-      save () {
-        this.$http.post('rest/categories', this.model)
+      async save () {
+        console.log(this.model)
+        let res = await this.$http.post('categories', this.model)
+        console.log(res)
+        this.$router.push('/categories/list')
       }
     },
   }
