@@ -4,8 +4,19 @@ module.exports = app => {
   const router = express.Router()
   const Category = require('../../models/Category')
   router.post('/categories', async (req,res) => {
-    console.log('categories', req.body)
     const model = await Category.create(req.body)
+    res.send(model)
+  })
+
+  router.delete('/categories/:id', async (req,res) => {
+    await Category.findByIdAndDelete(req.params.id,req.body)
+    res.send({
+      success: true
+    })
+  })
+
+  router.put('/categories/:id', async (req,res) => {
+    const model = await Category.findByIdAndUpdate(req.params.id,req.body)
     res.send(model)
   })
 
@@ -14,12 +25,12 @@ module.exports = app => {
     res.send(items)
   })
 
-  router.delete('/categories/:id', async (req,res) => {
-    console.log(req)
-    await Category.findByIdAndDelete(req.params._id)
-    res.send({
-      success: true
-    })
+  router.get('/categories/:id', async (req,res) => {
+    console.log(req.params)
+    const item = await Category.findById(req.params.id)
+    res.send(item)
   })
+
+
   app.use('/admin/api', router)
 }

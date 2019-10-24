@@ -4,6 +4,7 @@
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="240">
       </el-table-column>
+      <el-table-column prop="parent.name" label="上级分类"></el-table-column>
       <el-table-column prop="name" label="分类名称">
       </el-table-column>
       <el-table-column fixed="right"
@@ -15,7 +16,7 @@
                        @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
             <el-button type="text" 
                        size="small"
-                       @click="remove(scope.row)">删除</el-button>           
+                       @click="remove(scope.row)">删除</el-button>
           </template>
       </el-table-column>
     </el-table>
@@ -44,11 +45,12 @@
           type: 'warning'
         }).then(async () => {
           console.log(row)
-          await this.$http.delete(`categories${row._id}`)
+          await this.$http.delete(`categories/${row._id}`)
           this.$message({
             type: 'success',
             message: '删除成功!'
           });
+          this.fetch()
         }).catch(() => {
           this.$message({
             type: 'info',
