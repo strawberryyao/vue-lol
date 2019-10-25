@@ -2,35 +2,47 @@ module.exports = app => {
   const express = require('express')
   
   const router = express.Router()
-  const Category = require('../../models/Category')
-  router.post('/categories', async (req,res) => {
-    const model = await Category.create(req.body)
+  // const req.Model = require('../../models/req.Model')
+  
+  router.post('/', async (req,res) => {
+    const model = await req.Model.create(req.body)
     res.send(model)
   })
 
-  router.delete('/categories/:id', async (req,res) => {
-    await Category.findByIdAndDelete(req.params.id,req.body)
+  router.delete('/:id', async (req,res) => {
+    await req.Model.findByIdAndDelete(req.params.id,req.body)
     res.send({
       success: true
     })
   })
 
-  router.put('/categories/:id', async (req,res) => {
-    const model = await Category.findByIdAndUpdate(req.params.id,req.body)
+  router.put('/:id', async (req,res) => {
+    const model = await req.Model.findByIdAndUpdate(req.params.id,req.body)
     res.send(model)
   })
 
-  router.get('/categories', async (req,res) => {
-    const items = await Category.find().limit(10)
+  router.get('/', async (req,res) => {
+    const queryOptions = {}
+    console.log('/', req.Model.modelName)
+    if(req.Model.modelName === 'Category') {
+      queryOptions.populate = 'parent'
+    }
+    const items = await req.Model.find().setOptions(queryOptions).limit(10)
     res.send(items)
   })
 
-  router.get('/categories/:id', async (req,res) => {
+  router.get('/:id', async (req,res) => {
     console.log(req.params)
-    const item = await Category.findById(req.params.id)
+    const item = await req.Model.findById(req.params.id)
     res.send(item)
   })
 
 
-  app.use('/admin/api', router)
+  app.use('/admin/api/rest/:resource', (req,res,next) => {
+    //inflection.classify categories => Category
+    const modelName = require('inflection').classify(req.params.resource)
+    req.Model = require(`../../models/${modelName}`)
+    console.log(req.params.resource)
+    next()
+  }, router)
 }
