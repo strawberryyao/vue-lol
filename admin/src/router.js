@@ -18,6 +18,7 @@ const router = new Router({
       children:[
         { path: '/categories/create', component: CategoryEdit },
         { path: '/categories/list', component: CategoryList },
+        // props:true 等价 this.$route.params.id
         { path: '/categories/edit/:id', component: CategoryEdit, props:true },
 
         { path: '/items/create', component: ItemEdit },
