@@ -46,22 +46,22 @@
       async save () {
         let res
         if (this.id) {
-          res = await this.$http.put(`rest/Items/${this.id}`, this.model)
+          res = await this.$http.put(`rest/items/${this.id}`, this.model)
         } else {
-          res = await this.$http.post('rest/Items', this.model)
+          res = await this.$http.post('rest/items', this.model)
         }
-        this.$router.push('/Items/list')
+        this.$router.push('/items/list')
         this.$message({
           type: 'success',
           message: '保存成功'
         })
       },
       async fetch () {
-        let res = await this.$http.get(`rest/Items/${this.id}`)
+        let res = await this.$http.get(`rest/items/${this.id}`)
         this.model = res.data
       },
       async fetchParents () {
-        const res = await this.$http.get(`rest/Items`)
+        const res = await this.$http.get(`rest/items`)
         this.parents = res.data
       }
     },
