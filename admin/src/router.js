@@ -6,9 +6,12 @@ import CategoryList from './views/category/CategoryList.vue';
 
 import ItemEdit from './views/item/ItemEdit.vue';
 import ItemList from './views/item/ItemList.vue';
+
 import HeroEdit from './views/hero/HeroEdit.vue';
 import HeroList from './views/hero/HeroList.vue';
 
+import ArticleEdit from './views/article/ArticleEdit.vue';
+import ArticleList from './views/article/ArticleList.vue';
 
 
 Vue.use(Router)
@@ -31,8 +34,11 @@ const router = new Router({
 
         { path: '/heros/create', component: HeroEdit },
         { path: '/heros/list', component: HeroList },
-        { path: '/heros/edit/:id', component: HeroEdit, props:true }
-
+        { path: '/heros/edit/:id', component: HeroEdit, props:true },
+        
+        { path: '/articles/create', component: ArticleEdit },
+        { path: '/articles/list', component: ArticleList },
+        { path: '/articles/edit/:id', component: ArticleEdit, props:true },
       ]
     }
   ]
